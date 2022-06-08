@@ -6,9 +6,11 @@ STM_COMMON=../../sdk/
 STM32CUBEPROG:= ../../stmcubeprog/bin/STM32_Programmer.sh -vb 1 -q -c port=SWD 
 
 # Put your source files here (or *.c, etc)
-SRCS = main.c 
+SRCS = main_projekta.c 
 SRCS += system_stm32f4xx.c stm32f4xx_it.c
 SRCS += usart.c misc.c
+SRCS += display16x2.c
+#SRCS += LCD16x2.c LCD16x2_cfg.c
 
 
 # HAL Driver

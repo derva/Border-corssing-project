@@ -37,18 +37,6 @@ int main(void){
 	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	
-	__HAL_RCC_GPIOE_CLK_ENABLE();
-	GPIO_InitStruct.Pin = GPIO_PIN_4;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-	
-	
-	GPIO_InitStruct.Pin = GPIO_PIN_5;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
-	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 		 
 	//stepper motor 1
 	__HAL_RCC_GPIOB_CLK_ENABLE();
@@ -81,27 +69,19 @@ int main(void){
 	printUSART2("Starting program...");	
 	while(1){
 	
-		printUSART2("startam while\n");
-		delay_ms_soft(1000);
+		printUSART2("Startam while\n");
+		//delay_ms_soft(1000);
 		
 		//if(stepper_motor1 == 1){
 		
-		//HAL_GPIO_WritePin(GPIOA,GPIO_PIN_1,GPIO_PIN_RESET);
-		
-		//HAL_GPIO_WritePin(GPIOE,GPIO_PIN_4,GPIO_PIN_RESET);
-				
-		if((HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1))){
-			printUSART2("dugme 1 pritisnuto\n");	
-			HAL_GPIO_WritePin(GPIOA,GPIO_PIN_7,GPIO_PIN_SET);
-			
-		}
-		if((HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_4))){
-			printUSART2("dugme 2 pritisnuto\n");
-			HAL_GPIO_WritePin(GPIOE,GPIO_PIN_5,GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOA,GPIO_PIN_7,GPIO_PIN_SET);
+		if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)){
+			HAL_GPIO_WritePin(GPIOA,GPIO_PIN_7,GPIO_PIN_RESET);
 			
 		}
 		
 		if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7)){
+			//if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)){
 			//stepper_motor1()
 			int i;
 			printUSART2("startam motor1\n");
@@ -127,52 +107,20 @@ int main(void){
 					GPIOB->ODR = 0x08;	
 					delay_ms_soft(10);
 			}
-			HAL_GPIO_WritePin(GPIOE,GPIO_PIN_1,GPIO_PIN_RESET);
 		}
-		
-		delay_ms_soft(1000);
-		
-		
-		if((HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_5))){
-			int i;
-			printUSART2("startam motor2\n");
-			for(i = 0; i < 130; i++){
-			printUSART2("s2");
-					GPIOC->ODR = 0x08;	
-					delay_ms_soft(10);
-					GPIOC->ODR = 0x04;	
-					delay_ms_soft(10);
-					GPIOC->ODR = 0x02;	
-					delay_ms_soft(10);
-					GPIOC->ODR = 0x01;	
-					delay_ms_soft(10);
-				}
-			delay_ms_soft(10000);
-			for(i = 0; i < 130; i++){
-					GPIOC->ODR = 0x01;	
-					delay_ms_soft(10);
-					GPIOC->ODR = 0x2;	
-					delay_ms_soft(10);
-					GPIOC->ODR = 0x04;	
-					delay_ms_soft(10);
-					GPIOC->ODR = 0x08;	
-					delay_ms_soft(10);
-			}
-			HAL_GPIO_WritePin(GPIOE,GPIO_PIN_4,GPIO_PIN_RESET);
-		}	
-		delay_ms_soft(1000);	
+				
 		
 		if(HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_1) == 1){
-			printUSART2("Na termiinalu A nema auto\n");
-		}
-		else{
 			printUSART2("Na termiinalu A ima auto\n");
 		}
+		else{
+			printUSART2("Na termiinalu A nema auto\n");
+		}
 		if(HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_2) == 1){
-			printUSART2("Na termiinalu B nema auto\n");
+			printUSART2("Na termiinalu B ima auto\n");
 		}
 		else{
-			printUSART2("Na termiinalu B ima auto\n");
+			printUSART2("Na termiinalu B nema auto\n");
 		}
 		delay_ms_soft(1000);
 	}
